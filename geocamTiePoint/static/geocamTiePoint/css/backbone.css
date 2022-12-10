@@ -1,0 +1,185 @@
+body{
+    background-color: #FAFAFA;
+    overflow-y: hidden;
+}
+
+img {
+    /*fix a problem introduced by bootstraps global styles*/
+    max-width: none;
+}
+
+#navlist {
+    padding-left: 0px;
+}
+
+.nav_pad_vertical {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-text {
+    text-decoration: underline;
+}
+
+#backbone_app_container {
+      height: 100%;
+      margin: auto 30px;
+}
+
+#image_canvas {
+    height: 100%;
+    width: 100%;
+}
+
+input#locationSearch {
+    width: 160px;
+}
+
+/* Map marker labels */
+.labels {
+    text-align: center;
+    width: 40px;
+    font-size: 10px;
+}
+
+.map-marker-label{
+    position: absolute;
+	color: blue;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.centerpoint-label{
+    position: absolute;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.vsplitbar,.splitter-bar-vertical{
+    width: 14px;
+    background: #ccc;
+    cursor: col-resize;
+    /*
+    -moz-box-shadow: 3px 3px 4px #000;
+    -webkit-box-shadow: 3px 3px 4px #000;
+    */
+    box-shadow: 0 5px 6px 2px #666;
+}
+
+#split_container {
+    width: 100%;
+    height: 100%;
+}
+
+#split_left, #split_right, #map_canvas, #image_canvas {
+    height: 100%;
+}
+
+#new_overlay_view > form > input {
+    display: block;
+}
+
+#saveStatus {
+    vertical-align: middle;
+    margin-left: 0.2em;
+}
+
+#download_link, #simple_viewer {
+    padding-top: 1em;
+}
+
+#export_container {
+    margin-top: 1em;
+}
+
+#download_link a, #simple_viewer a {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.floatleft {
+    float: left;
+    margin-right: 1em;
+}
+
+.floatright {
+    float: right;
+}
+
+#location {
+    margin-top: -10px;
+}
+
+#location .input-prepend {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.instructions-prompt {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    margin-right: 1em;
+    margin-left: 2em;
+    color: #000;
+    font-weight: bold;
+    background-color: #ff9;
+}
+
+.error{
+    color: red;
+}
+
+.btn.disabled, .btn[disabled] {
+  color: #888;
+}
+
+.navbar .nav li a {
+    padding-bottom: 0px;
+}
+
+p.pull-right.navbar-text {
+    padding-top: 15px;
+}
+
+a.btn-primary {
+    color: #ffffff;
+}
+
+.import-requirements {
+    padding-left: 15px;
+    font-size: 0.9em;
+    color: #888888;
+    padding-bottom: 10px;
+}
+
+#newOverlayFile {
+    padding-bottom: 10px;
+}
+
+.get-started {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+#helpText { /* Modal help dialog, with video embed */
+    width: 600px;
+}
+
+#video {
+    margin-left: 10px;
+}
+
+input#rotationAngle {
+    width: 75px;
+}
+
+.columnSpacer {
+	padding-right: 15px;
+}
+

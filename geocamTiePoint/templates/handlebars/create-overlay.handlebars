@@ -1,0 +1,15 @@
+<form class="new_overlay_form" id="new_overlay_form_id" action="/overlays/new.json" method="post" enctype="multipart/form-data">
+	<h3> Create New Overlays</h3>
+	
+	<div class="tab-content">
+		<div class="tab-pane active" id="imageIdSubmit">
+			<table id="create_overlays">
+				<tr>
+					<th><label for="id_imageId">ISS Image ID:</label></th>
+					<td><input id="id_imageId" name="imageId" type="text" placeholder="i.e. ISS039-E-12345"/> </td>
+				</tr>
+			</table>
+		</div>
+	<div id="formErrorContainer"></div>
+	<input id="createOverlaysButton" type="submit" class="btn btn-primary"  value="Open"/> 
+</form>

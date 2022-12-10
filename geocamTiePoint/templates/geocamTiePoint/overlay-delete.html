@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Delete Overlay {{ overlay.name }}</title>
+{% endblock %}
+{% block contents %}
+<h4>Are you sure you want to delete overlay {{ overlay.name }}?</h4><br>
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="OK">
+  <input type="button" value="Cancel"
+         onclick="window.location='{% url 'geocamTiePoint_overlayIndex' %}'">
+</form>
+{% endblock %}

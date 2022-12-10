@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MapFasten: {{ name }}</title>
+<style>
+html, body, #map_canvas {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+#map_canvas {
+    height: 90%;
+}
+</style>
+</head>
+<body>
+<div>
+  You can save this web page and serve it from your own web site as an easy way
+  to share your overlay.
+</div>
+<div>
+  You can also cut and paste the JavaScript that loads this overlay into
+  any map built with the
+  <a href="https://developers.google.com/maps/documentation/javascript/tutorial">
+  Google Maps API</a>,
+  and you can use this technique to load multiple overlays at the same
+  time.
+</div>
+<div>
+  <b>MapFasten: {{ name }}</b>&nbsp;
+  <label for="opacity_{{ slug }}">
+    Opacity
+  </label>
+  <select id="opacity_{{ slug }}">
+    <option value="0">Hide</option>
+    <option value="0.25">25%</option>
+    <option value="0.5">50%</option>
+    <option value="0.75">75%</option>
+    <option value="1" selected>100%</option>
+  </select>
+  <button id="zoom_{{ slug }}">Zoom To Overlay Bounds</button>
+</div>
+<div id="map_canvas"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqeDyQcbBy80XwLf0X8gGY0KZjna-txDc&sensor=false"></script>
+<script>
+
+/********************************************
+
+bind() does not work correctly in the Webkit versions shipped in iOS 5.1.1.
+
+Therefore, the following is an approximate bind implementation.
+
+Source: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/bind
+
+********************************************/
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function (oThis) {
+    if (typeof this !== "function") {
+      // closest thing possible to the ECMAScript 5 internal IsCallable function
+      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+    }
+ 
+    var aArgs = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP = function () {},
+        fBound = function () {
+          return fToBind.apply(this instanceof fNOP && oThis
+                                 ? this
+                                 : oThis,
+                               aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+ 
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+ 
+    return fBound;
+  };
+}
+
+function MapFastenOverlay(name, slug, tileRootUrl, bounds) {
+    this.name = name;
+    this.tileRootUrl = tileRootUrl;
+    var sw = new google.maps.LatLng(bounds.south, bounds.west);
+    var ne = new google.maps.LatLng(bounds.north, bounds.east);
+    this.bounds = new google.maps.LatLngBounds(sw, ne);
+
+    this.updateOpacity = this.updateOpacity.bind(this);
+    this.zoom = this.zoom.bind(this);
+
+    this.opacitySelector = document.getElementById('opacity_' + slug);
+    this.opacitySelector.addEventListener("change", this.updateOpacity);
+
+    var zoomButton = document.getElementById('zoom_' + slug);
+    zoomButton.addEventListener("click", this.zoom);
+
+    this.added = false;
+    this.opacity = null;
+}
+
+MapFastenOverlay.prototype.find = function() {
+    for (var i=0; i < map.overlayMapTypes.getLength(); i++) {
+        var overlayType = map.overlayMapTypes.getAt(i);
+        if (overlayType.name == this.name) {
+            return [i, overlayType];
+        }
+    }
+    throw 'overlay not found';
+};
+
+// opacity in range 0..1; 0.5 = 50% opaque
+MapFastenOverlay.prototype.setOpacity = function(opacity) {
+    // remove if needed
+    if (this.added && opacity == 0) {
+        var idx = this.find()[0];
+        map.overlayMapTypes.setAt(idx, null);
+
+        this.added = false;
+        this.opacity = null;
+        return;
+    }
+
+    // add if needed
+    if (!this.added && opacity != 0) {
+        var self = this;
+        var overlayOptions = {
+            name: this.name,
+            getTileUrl: function(coord, zoom) {
+                return (self.tileRootUrl + '/' +
+                        zoom + '/' +
+                        coord.x + '/' +
+                        coord.y + '.png');
+            },
+            tileSize: new google.maps.Size({{ tileSize }}, {{ tileSize }})
+        };
+        var overlayType = new google.maps.ImageMapType(overlayOptions);
+        map.overlayMapTypes.insertAt(0, overlayType);
+
+        this.added = true;
+        this.opacity = 1;
+    }
+
+    // adjust opacity if needed
+    if (opacity != this.opacity) {
+        var overlayType = this.find()[1];
+        overlayType.setOpacity(opacity);
+        this.opacity = opacity;
+    }
+};
+
+MapFastenOverlay.prototype.updateOpacity = function() {
+    var idx = this.opacitySelector.selectedIndex;
+    var value = this.opacitySelector.options[idx].value;
+    this.setOpacity(parseFloat(value));
+};
+
+MapFastenOverlay.prototype.zoom = function() {
+    map.fitBounds(this.bounds);
+};
+
+/**********************************************************************/
+
+var map;
+var overlay_{{ slug }};
+
+function initialize() {
+    map = new google.maps.Map(document.getElementById('map_canvas'), {
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    overlay_{{ slug }} = new MapFastenOverlay('{{ name }}', '{{ slug }}',
+                                              '{{ tileRootUrl }}',
+                                              {{ bounds|safe }});
+
+    overlay_{{ slug }}.setOpacity(1);
+    overlay_{{ slug }}.zoom();
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+</body>
+</html>

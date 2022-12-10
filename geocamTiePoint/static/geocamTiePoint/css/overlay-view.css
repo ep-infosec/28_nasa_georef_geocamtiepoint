@@ -1,0 +1,99 @@
+html {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+body, div#contents {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+table.map_area {
+    height:100%;
+    width: 100%;
+}
+
+table.map_area td {
+    width: 50%;
+}
+
+#map_canvas {
+    height: 100%;
+    width: 100%;
+}
+
+td, tr {
+    padding: 0px;
+}
+
+div.map {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+div.top, div.bottom {
+    margin: 10px;
+}
+
+.labels {
+    text-align: center;
+    width: 40px;
+    font-size: 10px;
+}
+
+.title {
+    margin-bottom: 10px;
+    border-style: none;
+    font-size: 25px;
+    width: 100%;
+}
+
+.tiepoint_number {
+	color: yellow;
+}
+
+#rotation_slider_div {
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-top: 10px;
+	width: 60%;
+}
+
+.slider_parent_div {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	background-color:#f9f9f9;
+	border:solid 1px #ddd;
+	padding:10px;
+	width: 45%;
+}
+
+#brightness_slider_div {
+	float:left;
+}
+
+#contrast_slider_div {
+	float:right;
+}
+
+.slider_parent_div span {}
+.slider_div {
+	float:right;
+	width:60%;
+} 
+
+#rotation_slider {
+	width: 70%;
+}
+
+.widget_value {
+	display: inline-block;
+}
